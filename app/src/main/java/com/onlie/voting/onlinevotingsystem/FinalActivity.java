@@ -8,44 +8,44 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class FinalActivity extends AppCompatActivity {
 
-    TextView V1,V2;
+    TextView V1, V2;
     String PartyName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final);
 
-        Intent i=getIntent();
-        PartyName=i.getStringExtra("partyname");
+        Intent i = getIntent();
+        PartyName = i.getStringExtra("partyname");
 
-        V1=(TextView)findViewById(R.id.v1);
-        V2=(TextView)findViewById(R.id.v2);
+        V1 = findViewById(R.id.v1);
+        V2 = findViewById(R.id.v2);
 
-        V2.setText("Your vote is submitted to "+PartyName);
+        V2.setVisibility(View.VISIBLE);
+        String votedPartyMsg = "Your vote is submitted to " + PartyName;
+        V2.setText(votedPartyMsg);
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        {
-
-            case R.id.logout:
-
-                Intent intent=new Intent(FinalActivity.this,welcomeActivity.class);
-                startActivity(intent);
-                return true;
-
+        if (item.getItemId() == R.id.logout) {
+            Intent intent = new Intent(FinalActivity.this, welcomeActivity.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
