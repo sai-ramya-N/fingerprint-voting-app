@@ -99,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
                             @Override
                             public void run() {
 
-                                Intent i = new Intent(HomeActivity.this, VerifiyId.class);
+                                Intent i = new Intent(HomeActivity.this, VerifyId.class);
                                 i.putExtra("phone", Phone);
                                 startActivity(i);
 

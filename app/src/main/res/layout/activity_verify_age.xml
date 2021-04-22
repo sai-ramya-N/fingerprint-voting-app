@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back2"
-    tools:context=".VerifiyId">
+    tools:context=".VerifyId">
 
     <EditText
         android:id="@+id/idproof"
@@ -16,6 +16,8 @@
         android:layout_marginTop="20dp"
         android:hint="Enter You ID.."
         android:background="@drawable/input_design"
+        android:maxLength="12"
+        android:inputType="number"
         android:padding="20dp"
         />
 

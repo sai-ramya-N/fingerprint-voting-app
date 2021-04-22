@@ -19,8 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SelectParty extends AppCompatActivity {
 
-    Button Party1,Party2,Party3;
-    private DatabaseReference mref;
+    Button Party1, Party2, Party3;
+    private DatabaseReference firebaseRef;
     private ProgressDialog LoadingBar;
     String Phone;
 
@@ -30,13 +30,13 @@ public class SelectParty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_party);
 
-        Party1=(Button)findViewById(R.id.party1);
-        Party2=(Button)findViewById(R.id.party2);
-        Party3=(Button)findViewById(R.id.party3);
-        Intent i=getIntent();
-        Phone=i.getStringExtra("phone");
-        mref= FirebaseDatabase.getInstance().getReference();
-        LoadingBar=new ProgressDialog(this);
+        Party1 = (Button) findViewById(R.id.party1);
+        Party2 = (Button) findViewById(R.id.party2);
+        Party3 = (Button) findViewById(R.id.party3);
+        Intent i = getIntent();
+        Phone = i.getStringExtra("phone");
+        firebaseRef = FirebaseDatabase.getInstance().getReference();
+        LoadingBar = new ProgressDialog(this);
 
 
         Party1.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +44,7 @@ public class SelectParty extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final AlertDialog.Builder builder=new AlertDialog.Builder(SelectParty.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(SelectParty.this);
                 builder.setTitle("Confirm Your Party");
                 builder.setMessage("Do you want to give your vote to Party1");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -56,13 +56,13 @@ public class SelectParty extends AppCompatActivity {
                         LoadingBar.setCanceledOnTouchOutside(false);
                         LoadingBar.show();
 
-                        mref.child("Users").child(Phone).child("Party").setValue("Party1").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        firebaseRef.child("Users").child(Phone).child("Party").setValue("Party1").addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
 
-                                Intent i=new Intent(SelectParty.this,FinalActivity.class);
-                                i.putExtra("phone",Phone);
-                                i.putExtra("partyname","Party 1");
+                                Intent i = new Intent(SelectParty.this, FinalActivity.class);
+                                i.putExtra("phone", Phone);
+                                i.putExtra("partyname", "Party 1");
 
                                 startActivity(i);
 
@@ -70,6 +70,8 @@ public class SelectParty extends AppCompatActivity {
                                 Toast.makeText(SelectParty.this, "Your Vote is Submitted to our database..", Toast.LENGTH_LONG).show();
                             }
                         });
+
+                        firebaseRef.child("Users").child(Phone).child("Vote").setValue("1");
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -82,14 +84,12 @@ public class SelectParty extends AppCompatActivity {
                 builder.show();
 
 
-
-
             }
         });
         Party2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder builder=new AlertDialog.Builder(SelectParty.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(SelectParty.this);
                 builder.setTitle("Confirm Your Party");
                 builder.setMessage("Do you want to give your vote to Party2");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -101,13 +101,13 @@ public class SelectParty extends AppCompatActivity {
                         LoadingBar.setCanceledOnTouchOutside(false);
                         LoadingBar.show();
 
-                        mref.child("Users").child(Phone).child("Party").setValue("Party2").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        firebaseRef.child("Users").child(Phone).child("Party").setValue("Party2").addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
 
-                                Intent i=new Intent(SelectParty.this,FinalActivity.class);
-                                i.putExtra("phone",Phone);
-                                i.putExtra("partyname","Party 2");
+                                Intent i = new Intent(SelectParty.this, FinalActivity.class);
+                                i.putExtra("phone", Phone);
+                                i.putExtra("partyname", "Party 2");
 
                                 startActivity(i);
 
@@ -115,6 +115,7 @@ public class SelectParty extends AppCompatActivity {
                                 Toast.makeText(SelectParty.this, "Your Vote is Submitted to our database..", Toast.LENGTH_LONG).show();
                             }
                         });
+                        firebaseRef.child("Users").child(Phone).child("Vote").setValue("1");
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -130,7 +131,7 @@ public class SelectParty extends AppCompatActivity {
         Party3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder builder=new AlertDialog.Builder(SelectParty.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(SelectParty.this);
                 builder.setTitle("Confirm Your Party");
                 builder.setMessage("Do you want to give your vote to Party3");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -142,13 +143,13 @@ public class SelectParty extends AppCompatActivity {
                         LoadingBar.setCanceledOnTouchOutside(false);
                         LoadingBar.show();
 
-                        mref.child("Users").child(Phone).child("Party").setValue("Party3").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        firebaseRef.child("Users").child(Phone).child("Party").setValue("Party3").addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
 
-                                Intent i=new Intent(SelectParty.this,FinalActivity.class);
-                                i.putExtra("phone",Phone);
-                                i.putExtra("partyname","Party 3");
+                                Intent i = new Intent(SelectParty.this, FinalActivity.class);
+                                i.putExtra("phone", Phone);
+                                i.putExtra("partyname", "Party 3");
 
                                 startActivity(i);
 
@@ -156,6 +157,7 @@ public class SelectParty extends AppCompatActivity {
                                 Toast.makeText(SelectParty.this, "Your Vote is Submitted to our database..", Toast.LENGTH_LONG).show();
                             }
                         });
+                        firebaseRef.child("Users").child(Phone).child("Vote").setValue("1");
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

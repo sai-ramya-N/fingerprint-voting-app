@@ -21,7 +21,7 @@
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity android:name="com.onlie.voting.onlinevotingsystem.UserUpdatePassword" />
         <activity android:name="com.onlie.voting.onlinevotingsystem.SelectParty" />
-        <activity android:name="com.onlie.voting.onlinevotingsystem.VerifiyId" />
+        <activity android:name="com.onlie.voting.onlinevotingsystem.VerifyId" />
         <activity
             android:name="com.onlie.voting.onlinevotingsystem.HomeActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
