@@ -18,7 +18,7 @@
         android:layout_marginLeft="20dp"
         android:layout_centerHorizontal="true"
         android:layout_height="400dp"
-        app:srcCompat="@drawable/voter" />
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/welcome5"
