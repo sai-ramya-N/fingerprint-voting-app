@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:visibility="invisible"
+
         android:layout_marginLeft="20dp"
         android:padding="20dp"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:text="Click here to vote now"/>
+        android:text="@string/click_here_to_vote_now"/>
 
     <ImageView
         android:layout_below="@+id/votenowtv"
@@ -29,21 +29,12 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:visibility="invisible"
-        android:src="@drawable/votenow"/>
-
-    <ImageView
-        android:layout_below="@+id/votenowtv"
-        android:id="@+id/votedicon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:visibility="invisible"
-        android:src="@drawable/voted"/>
+        android:src="@drawable/votenow"
+        android:contentDescription="@string/vote_by_clicking_here" />
 
     <TextView
         android:visibility="invisible"
-        android:layout_below="@+id/votedicon"
+        android:layout_below="@+id/authenticate"
         android:id="@+id/votedtv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,5 +45,5 @@
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:text="Thanks for voting!"/>
+        android:text="@string/thanks_for_voting"/>
 </RelativeLayout>

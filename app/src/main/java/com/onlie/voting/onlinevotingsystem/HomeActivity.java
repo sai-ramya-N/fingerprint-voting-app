@@ -27,42 +27,34 @@ import java.util.concurrent.Executors;
 
 public class HomeActivity extends AppCompatActivity {
 
-    ImageView Auth,Tick;
-    private ProgressDialog LoadingBar;
-    private DatabaseReference mref;
+    ImageView Auth;
     String Phone;
-    public String isVote="0";
-    TextView VoteNowTv,VotedTv;
+    public String isVote = "0";
+    TextView VoteNowTv, VotedTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Intent i=getIntent();
+        Intent i = getIntent();
         Phone = i.getStringExtra("phone");
-        mref= FirebaseDatabase.getInstance().getReference();
+        DatabaseReference firebaseRef = FirebaseDatabase.getInstance().getReference();
 
-        Auth=(ImageView)findViewById(R.id.authenticate);
-        Tick=(ImageView)findViewById(R.id.votedicon);
-        VoteNowTv=(TextView)findViewById(R.id.votenowtv);
-        VotedTv=(TextView)findViewById(R.id.votedtv);
+        Auth = findViewById(R.id.authenticate);
+        VoteNowTv = findViewById(R.id.votenowtv);
+        VotedTv = findViewById(R.id.votedtv);
 
-        mref.child("Users").child(Phone).addValueEventListener(new ValueEventListener() {
+        firebaseRef.child("Users").child(Phone).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                isVote=dataSnapshot.child("Vote").getValue().toString();
-                if(isVote.equals("1"))
-                {
-                    Tick.setVisibility(View.VISIBLE);
+                isVote = dataSnapshot.child("Vote").getValue().toString();
+                if (isVote.equals("1")) {
                     VotedTv.setVisibility(View.VISIBLE);
                     VoteNowTv.setVisibility(View.INVISIBLE);
                     Auth.setVisibility(View.INVISIBLE);
 
-                }
-                else
-                {
-                    Tick.setVisibility(View.INVISIBLE);
+                } else {
                     VotedTv.setVisibility(View.INVISIBLE);
                     VoteNowTv.setVisibility(View.VISIBLE);
                     Auth.setVisibility(View.VISIBLE);
@@ -78,17 +70,10 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-
-
-
-        LoadingBar=new ProgressDialog(this);
-
+        ProgressDialog loadingBar = new ProgressDialog(this);
 
 
         final Executor executor = Executors.newSingleThreadExecutor();
-
-
-
 
 
         final BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(this)
@@ -102,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }).build();
 
-        final HomeActivity activity=this;
+        final HomeActivity activity = this;
 
         Auth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,27 +99,26 @@ public class HomeActivity extends AppCompatActivity {
                             @Override
                             public void run() {
 
-                                Intent i=new Intent(HomeActivity.this, VerifiyId.class);
-                                i.putExtra("phone",Phone);
+                                Intent i = new Intent(HomeActivity.this, VerifiyId.class);
+                                i.putExtra("phone", Phone);
                                 startActivity(i);
 
                                 /**LoadingBar.setTitle("Please Wait");
-                                LoadingBar.setMessage("Please wait while your vote is submitting in our database..");
-                                LoadingBar.setCanceledOnTouchOutside(false);
-                                LoadingBar.show();
+                                 LoadingBar.setMessage("Please wait while your vote is submitting in our database..");
+                                 LoadingBar.setCanceledOnTouchOutside(false);
+                                 LoadingBar.show();
 
 
-                                mref.child("Users").child(Phone).child("Vote").setValue("1").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                                 firebaseRef.child("Users").child(Phone).child("Vote").setValue("1").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override public void onComplete(@NonNull Task<Void> task) {
 
-                                        LoadingBar.dismiss();
+                                LoadingBar.dismiss();
 
-                                        Tick.setVisibility(View.VISIBLE);
-                                        VotedTv.setVisibility(View.VISIBLE);
-                                        VoteNowTv.setVisibility(View.INVISIBLE);
-                                        Auth.setVisibility(View.INVISIBLE);
-                                    }
+                                Tick.setVisibility(View.VISIBLE);
+                                VotedTv.setVisibility(View.VISIBLE);
+                                VoteNowTv.setVisibility(View.INVISIBLE);
+                                Auth.setVisibility(View.INVISIBLE);
+                                }
                                 });**/
 
                             }
@@ -148,27 +132,17 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu2,menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        {
-
-            case R.id.logout2:
-
-                Intent intent=new Intent(HomeActivity.this,welcomeActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.updatepassword2:
-                Intent intent2=new Intent(HomeActivity.this,UserUpdatePassword.class);
-                intent2.putExtra("phone",Phone);
-                startActivity(intent2);
-                return true;
+        if (item.getItemId() == R.id.logout) {
+            Intent intent = new Intent(HomeActivity.this, welcomeActivity.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

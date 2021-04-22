@@ -10,4 +10,7 @@
     <string name="new_user">New User ? Create Your Account.</string>
     <string name="phn_no">Enter Phone number…</string>
     <string name="login">Login</string>
+    <string name="click_here_to_vote_now">Click here to vote now</string>
+    <string name="thanks_for_voting">Thanks for voting!</string>
+    <string name="vote_by_clicking_here">Vote by Clicking Here</string>
 </resources>
