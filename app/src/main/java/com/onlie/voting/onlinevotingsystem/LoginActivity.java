@@ -23,13 +23,10 @@ import com.onlie.voting.onlinevotingsystem.Prevalent.Prevalent;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText Phone,Password;
-    private Button Login;
-    private DatabaseReference mref;
+    private EditText Phone, Password;
+    private DatabaseReference firebaseRef;
     private ProgressDialog LoadingBar;
-    String myphone,mypassword;
-    TextView Newuser;
-
+    String myPhone, myPassword;
 
 
     @Override
@@ -38,44 +35,45 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        Phone=(EditText)findViewById(R.id.loginphone);
-        Password=(EditText)findViewById(R.id.loginpassword);
-        Login=(Button)findViewById(R.id.loginbutton);
-        Newuser=(TextView)findViewById(R.id.Newuser);
+        Phone = findViewById(R.id.loginphone);
+        Password = findViewById(R.id.loginpassword);
+        Button login = findViewById(R.id.loginbutton);
+        TextView newUser = findViewById(R.id.Newuser);
+        TextView forgotPasswordTV = findViewById(R.id.forgotPasswordTV);
 
-        LoadingBar=new ProgressDialog(this);
-        mref= FirebaseDatabase.getInstance().getReference();
-        mypassword=Password.getText().toString();
-        myphone="+91"+Phone.getText().toString();
+        LoadingBar = new ProgressDialog(this);
+        firebaseRef = FirebaseDatabase.getInstance().getReference();
+        myPassword = Password.getText().toString();
+        myPhone = "+91" + Phone.getText().toString();
 
-
-        Newuser.setOnClickListener(new View.OnClickListener() {
+        newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i=new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(i);
             }
         });
 
-        Login.setOnClickListener(new View.OnClickListener() {
+        forgotPasswordTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, UserUpdatePassword.class);
+                startActivity(intent);
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(TextUtils.isEmpty(Phone.getText().toString()))
-                {
+                if (TextUtils.isEmpty(Phone.getText().toString())) {
                     Toast.makeText(LoginActivity.this, "Please enter your phone number..", Toast.LENGTH_SHORT).show();
-                }
-                else if(TextUtils.isEmpty(Password.getText().toString()))
-                {
+                } else if (TextUtils.isEmpty(Password.getText().toString())) {
                     Toast.makeText(LoginActivity.this, "Please enter your password...", Toast.LENGTH_SHORT).show();
-                }
-                else if(Phone.getText().toString().length() <10)
-                {
+                } else if (Phone.getText().toString().length() < 10) {
                     Toast.makeText(LoginActivity.this, "Please enter correct phone number..", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     LoginUser();
                 }
             }
@@ -85,46 +83,38 @@ public class LoginActivity extends AppCompatActivity {
     private void LoginUser() {
 
 
-
         LoadingBar.setTitle("Login Account");
         LoadingBar.setMessage("Please wait while we are checking our credentials..");
         LoadingBar.setCanceledOnTouchOutside(false);
         LoadingBar.show();
 
-        AllowAccessToUser(myphone,mypassword);
+        AllowAccessToUser(myPhone, myPassword);
     }
 
     private void AllowAccessToUser(final String myphone, final String mypassword) {
 
-        mref.addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.child("Users").child("+91"+Phone.getText().toString()).exists())
-                {
-                    final Users userdata=dataSnapshot.child("Users").child("+91"+Phone.getText().toString()).getValue(Users.class);
-                    if(userdata.getPhone().equals("+91"+Phone.getText().toString()))
-                    {
+                if (dataSnapshot.child("Users").child("+91" + Phone.getText().toString()).exists()) {
+                    final Users userdata = dataSnapshot.child("Users").child("+91" + Phone.getText().toString()).getValue(Users.class);
+                    if (userdata.getPhone().equals("+91" + Phone.getText().toString())) {
 
-                        if(userdata.getPassword().equals(Password.getText().toString()))
-                        {
+                        if (userdata.getPassword().equals(Password.getText().toString())) {
 
                             LoadingBar.dismiss();
                             Toast.makeText(LoginActivity.this, "Logged in Successfully..", Toast.LENGTH_SHORT).show();
-                            Intent i=new Intent(LoginActivity.this,HomeActivity.class);
-                            Prevalent.currentOnlineUser=userdata;
-                            i.putExtra("phone","+91"+Phone.getText().toString());
+                            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                            Prevalent.currentOnlineUser = userdata;
+                            i.putExtra("phone", "+91" + Phone.getText().toString());
                             startActivity(i);
-                        }
-                        else
-                        {
+                        } else {
                             LoadingBar.dismiss();
                             Toast.makeText(LoginActivity.this, "please enter correct password..", Toast.LENGTH_SHORT).show();
                         }
                     }
-                }
-                else
-                {
+                } else {
                     LoadingBar.dismiss();
                     Toast.makeText(LoginActivity.this, "please create your account first with this number ..", Toast.LENGTH_LONG).show();
                 }

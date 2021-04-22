@@ -3,9 +3,11 @@
 
 <!-- Login -->
 
+    <string name="password_input">Enter Password</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="final_message">Thanks for Voting</string>
-    <string name="login">Login To Your Account</string>
+    <string name="login_title">Login To Your Account</string>
     <string name="new_user">New User ? Create Your Account.</string>
-    <string name="phn_no">Enter Phone number...</string>
+    <string name="phn_no">Enter Phone number…</string>
+    <string name="login">Login</string>
 </resources>
